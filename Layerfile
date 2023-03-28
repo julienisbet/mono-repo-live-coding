@@ -1,0 +1,13 @@
+FROM vm/ubuntu:18.04
+
+RUN curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
+RUN sudo npm install npm@latest -g
+
+
+COPY . .  
+ENV NODE_ENV=production
+RUN npm install
+RUN npm install --prefix client && npm run build --prefix client
+RUN BACKGROUND npm start
+EXPOSE WEBSITE http://localhost:7890
