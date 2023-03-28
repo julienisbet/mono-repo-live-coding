@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 
 export default function App() {
+  const [message, setMessage] = useState('');
 
-  return <h1> Hello world!</h1>;
+  useEffect(() => {
+    const fetchData = async () => {
+      const resp = await fetch('/api/hello');
+      const data = await resp.json();
+      setMessage(data.message);
+    };
+    fetchData();
+  }, []);
+
+  return <h1> {message}</h1>;
 }
